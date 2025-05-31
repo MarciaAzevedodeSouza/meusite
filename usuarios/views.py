@@ -39,5 +39,5 @@ def cadastro(resquest):
             user.save()
             return HttpResponse("usuario cadastrado com sucesso")    
 
-
-        
+def home(request):
+    return render(request, 'Usuarios/home.html')
