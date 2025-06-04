@@ -41,3 +41,12 @@ def cadastro(resquest):
 
 def home(request):
     return render(request, 'Usuarios/home.html')
+
+def lancar(request):
+    return render(request, 'usuarios/lancar.html')
+
+def alterar(request):
+    return render(request, 'usuarios/alterar.html')
+
+def visualizar(request):
+    return render(request, 'usuarios/visualizar.html')

@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <title>templates base</title>
+    <title>{% block aba %}templates base{% endblock %}</title>
 </head>
 <body>
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #008000;">
         <div class="container px-5">
-            <a class="navbar-brand" href="#!">Diario de Notas</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Diario de Notas</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Pagina Inicial</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Pagina Inicial</a></li>
                     <li class="nav-item"><a class="nav-link" href="#!">Sobre</a></li>
                     <li class="nav-item"><a class="nav-link" href="#!">Contato</a></li>
                     <li class="nav-item"><a class="nav-link" href="#!">Logout</a></li>
@@ -28,17 +28,18 @@
         
         <!-- Call to Action-->
         <div class="card text-white  my-5 py-4 text-center" style="background-color: #006400;">
-            <div class="card-body"><p class="text-white m-0">Seja Bem Vindo ao Portal de Nota,aqui você encontrara todos os dados da suas deciplinas.</p></div>
+            <div class="card-body"><p class="text-white m-0">{% block titulo %}Seja Bem Vindo ao Portal de Nota,aqui você encontrara todos os dados da suas deciplinas.{% endblock %}</p></div>
         </div>
         <!-- Content Row-->
         <div class="row gx-4 gx-lg-5">
+            {% block conteudo %}
             <div class="col-md-4 mb-5">
                 <div class="card h-100" style="background-color:#d3d3d3 ;">
                     <div class="card-body" style="background-color: #ffffff;">
                         <h2 class="card-title">Lançar Notas</h2>
                         <p class="card-text">Nesta Opção você Podera Lançar todas as notas referentes as suas disciplinas,discriminando todoa os detalhes dos respectivos alunos.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!"> Clique Aqui</a></div>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'lancar' %}"> Clique Aqui</a></div>
                 </div>
             </div>
             <div class="col-md-4 mb-5">
@@ -47,7 +48,7 @@
                         <h2 class="card-title">Alterar Notas</h2>
                         <p class="card-text">Nesta opção você podera alterar todas as notas ja lançadas referentes de suas disciplinas,inclusive excluir alguma nota.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!"> Clique Aqui</a></div>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'alterar' %}"> Clique Aqui</a></div>
                 </div>
             </div>
             <div class="col-md-4 mb-5">
@@ -56,9 +57,10 @@
                         <h2 class="card-title">Visualisar Notas</h2>
                         <p class="card-text">Nesta opção você podera visualizar todas as notas referentes as suas disciplinas.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">Clique Aqui</a></div>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'visualizar' %}">Clique Aqui</a></div>
                 </div>
             </div>
+            {% endblock %}
         </div>
     </div>
     <!-- Footer-->
