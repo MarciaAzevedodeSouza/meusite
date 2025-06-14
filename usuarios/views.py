@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http.response import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.contrib.auth import login as login_django
+from django.contrib.auth import login as login_django,logout as logout_django
 
 
 def login(request):
@@ -17,18 +17,25 @@ def login(request):
 
         if user:
             login_django(request, user)
-            return HttpResponse('autenticado')
+            return render(request,'usuarios/home.html')
         else:
-            return HttpResponse('E-mail ou senha invalida')
+            return HttpResponse("email ou senha ivalidos!")
         
-def cadastro(resquest):
-    if resquest.method == 'GET':
-        return render(resquest,'usuarios/cadastro.html')
+def logout(request):
+    if request.user.is_authenticated:
+        logout_django(request)
+        return render(request,'usuarios/login.html')
     else:
-        username = resquest.POST.get('email')
-        email =resquest.POST.get('email')
-        password = resquest.POST.get('senha')
-        first_name = resquest.POST.get('nome')
+        return HttpResponse("você não tem conta ainda!")        
+        
+def cadastro(request):
+    if request.method == 'GET':
+        return render(request,'usuarios/cadastro.html')
+    else:
+        username = request.POST.get('email')
+        email =request.POST.get('email')
+        password = request.POST.get('senha')
+        first_name = request.POST.get('nome')
 
         user =User.objects.filter(username=username).first()
 
@@ -37,16 +44,30 @@ def cadastro(resquest):
         else:  
             user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name)
             user.save()
-            return HttpResponse("usuario cadastrado com sucesso")    
 
+            return render(request, 'usuarios/login.html')
+        
 def home(request):
-    return render(request, 'Usuarios/home.html')
+    if request.user.is_authenticated:
+        return render(request, 'Usuarios/home.html')
+    else:
+        return HttpResponse("faça o longin para acessar")
 
 def lancar(request):
-    return render(request, 'usuarios/lancar.html')
+    if request.user.is_authenticated:
+     
+     return render(request, 'Usuarios/lancar.html')
+    else:
+        return HttpResponse("faça o longin para acessar")
 
 def alterar(request):
-    return render(request, 'usuarios/alterar.html')
+    if request.user.is_authenticated:
+        return render(request, 'Usuarios/alterar.html')
+    else:
+        return HttpResponse("faça o longin para acessar")
 
 def visualizar(request):
-    return render(request, 'usuarios/visualizar.html')
+    if request.user.is_authenticated:
+        return render(request, 'Usuarios/visualizar.html')
+    else:
+        return HttpResponse("faça o longin para acessar")
