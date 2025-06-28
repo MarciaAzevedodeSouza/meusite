@@ -4,6 +4,7 @@ from django.http.response import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django,logout as logout_django
+from . models import Nota
 
 
 def login(request):
@@ -54,11 +55,28 @@ def home(request):
         return HttpResponse("faça o longin para acessar")
 
 def lancar(request):
-    if request.user.is_authenticated:
-     
-     return render(request, 'Usuarios/lancar.html')
+    if request.method == "Get": 
+        if request.user.is_authenticated:
+            return render(request, 'Usuarios/lancar.html')
+        else:
+            return HttpResponse("faça o longin para acessar")
     else:
-        return HttpResponse("faça o longin para acessar")
+        nota = Nota()
+        nota.nome_aluno = request.user.first_name
+        nota.disciplina = request.POST.get('disciplina')
+        nota.nota_atividades =request.POST.get('nota_atividades')
+        nota.nota_trabalho = request.POST.get('nota_trabalho')
+        nota.nota_prova = request.POST.get('nota_prova')
+        nota.media = int(nota.nota_atividades) +int(nota.nota_trabalho) + int(nota.nota_prova)
+
+        nota_verificado = Nota.objects.filter(disciplina=nota.disciplina).first()
+
+        if nota_verificado:
+            return HttpResponse('disciplina ja possui notas cadastradas')
+        else:
+            nota.save()
+            return render(request, 'usuarios/home.html')
+
 
 def alterar(request):
     if request.user.is_authenticated:
