@@ -6,7 +6,6 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django,logout as logout_django
 from . models import Nota
 
-
 def login(request):
     if request.method == "GET":
         return render(request,'usuarios/login.html')
@@ -55,7 +54,7 @@ def home(request):
         return HttpResponse("faça o longin para acessar")
 
 def lancar(request):
-    if request.method == "Get": 
+    if request.method == "GET": 
         if request.user.is_authenticated:
             return render(request, 'Usuarios/lancar.html')
         else:
@@ -67,7 +66,7 @@ def lancar(request):
         nota.nota_atividades =request.POST.get('nota_atividades')
         nota.nota_trabalho = request.POST.get('nota_trabalho')
         nota.nota_prova = request.POST.get('nota_prova')
-        nota.media = int(nota.nota_atividades) +int(nota.nota_trabalho) + int(nota.nota_prova)
+        nota.media = int(nota.nota_atividades) + int(nota.nota_trabalho) + int(nota.nota_prova)
 
         nota_verificado = Nota.objects.filter(disciplina=nota.disciplina).first()
 
@@ -77,7 +76,6 @@ def lancar(request):
             nota.save()
             return render(request, 'usuarios/home.html')
 
-
 def alterar(request):
     if request.user.is_authenticated:
         return render(request, 'Usuarios/alterar.html')
@@ -85,7 +83,22 @@ def alterar(request):
         return HttpResponse("faça o longin para acessar")
 
 def visualizar(request):
-    if request.user.is_authenticated:
-        return render(request, 'Usuarios/visualizar.html')
+    if request.method == "GET":
+        if request.user.is_authenticated:
+          lista_notas = Nota.objects.all()
+          dicionario_notas = {'lista_notas':lista_notas}
+          return render(request, 'Usuarios/visualizar.html',dicionario_notas)
+        else:
+            return HttpResponse("faça o longin para acessar")
     else:
-        return HttpResponse("faça o longin para acessar")
+        disciplina = request.POST.get('disciplina')
+        if disciplina == 'todas as disciplinas':
+            lista_notas = Nota.objects.all()
+            dicionario_notas = {'lista_notas':lista_notas}
+            return render(request, 'Usuarios/visualizar.html',dicionario_notas)
+        else:
+            lista_notas = Nota.objects.filter(disciplina=disciplina)
+            dicionario_notas_filtradas = {'lista_notas':lista_notas}
+            return render(request,'usuarios/visualizar.html',dicionario_notas_filtradas)
+
+        

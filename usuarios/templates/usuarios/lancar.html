@@ -1,36 +1,35 @@
-{% extends 'usuarios/base.html'  %}
+{% extends 'usuarios/base.html' %}
 
-{% block aba %}lancar notas{% endblock %}
+{% block aba %}Lançar Notas{% endblock %}
 
-{% block titulo %}lancar notas{% endblock %}
+{% block titulo %}Lançar Notas{% endblock %}
 
 {% block conteudo %}
 <h3>Cadastro</h3>
-<p class = "lead">preencha todas as informacoes</p>
+<p class="lead">Preencha todas as informações.</p>
 <hr>
-<form action = "{% url 'lancar'  %}" method="post">
-    {% csrf_token  %}
+<form action="{% url 'lancar' %}" method="POST">
+    {% csrf_token %}
     <div class="form-register">
-        <label for="userName">Nome</label>
-        <label for="Name" style="font-weight:  bold;">{{ user,first_name}}</label>
-
+        <label for="userName">Nome:</label>
+        <label for="Name" style="font-weight: bold;">{{ user.first_name }}</label>
     </div>
     <div class="form-register">
-        <label for="disciplinaName">Disciplina</label>
-        <input type="text" id="disciplinaName" name="disciplina">{{ user,first_name}}</label>
-
+        <label for="disciplinaName">Disciplina:</label>
+        <input type="text" id="disciplinaName" name="disciplina">
     </div>
     <div class="form-register">
-        <label for="notaatividades">notaatividades</label>
-        <input type="text" id="notaatividades" name="nota_atividades">{{ user,first_name}}</label>
-
-    </div> <div class="form-register">
-        <label for="notatrabalho">notatrabalho</label>
-        <input type="text" id="notatrabalho" name="nota_trabalho">{{ user,first_name}}</label>
-
-    </div> <div class="form-register">
-        <label for="notaprova">Disciplina</label>
-        <input type="text" id="disciplinaName" name="disciplina">{{ user,first_name}}</label>
-
+        <label for="notaAtividades">Nota das atividades:</label>
+        <input type="text" id="notaAtividades" name="nota_atividades">
     </div>
-{% endblock%}
+    <div class="form-register">
+        <label for="notaTrabalho">Nota do trabalho:</label>
+        <input type="text" id="notaTrabalho" name="nota_trabalho">
+    </div>
+    <div class="form-register">
+        <label for="notaProva">Nota da prova:</label>
+        <input type="text" id="notaProva" name="nota_prova">
+    </div>
+    <button type="submit" class="btn btn-primary">Registrar Notas</button>
+</form>
+{% endblock %}
