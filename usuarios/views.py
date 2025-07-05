@@ -30,7 +30,7 @@ def logout(request):
         return HttpResponse("você não tem conta ainda!")        
         
 def cadastro(request):
-    if request.method == 'GET':
+    if request.method == "GET":
         return render(request,'usuarios/cadastro.html')
     else:
         username = request.POST.get('email')
@@ -78,7 +78,7 @@ def lancar(request):
             return render(request, 'usuarios/home.html')
 
 def alterar(request):
-    if request.method =="GET":
+    if request.method == "GET":
       if request.user.is_authenticated:
         lista_notas = Nota.objects.all()
         dicionario_notas = {'lista_notas':lista_notas}
@@ -108,10 +108,10 @@ def visualizar(request):
 
 def excluir_verificacao(request, pk):
             if request.method =="GET":
-                if request.user.is_authenticate:
+                if request.user.is_authenticated:
                     lista_notas = Nota.objects.get(pk=pk)
                     dicionario_notas ={"lista_notas":lista_notas}
-                    return render(request,"usuarios/excluir.html")
+                    return render(request,"usuarios/excluir.html",dicionario_notas)
                 else:
                     return HttpResponse("faca o login para acessar")
 
