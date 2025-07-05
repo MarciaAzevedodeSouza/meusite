@@ -4,4 +4,42 @@
 
 {% block titulo %}alterar notas{% endblock %}
 
-{% block conteudo %}aqui dentro vai o conteudo...{% endblock%}
+{% block conteudo %}
+<h3>Alteração de notas registrada</h3>
+<hr>
+
+
+<div class = 'table-response'> 
+    <table class = 'table table-striped'>
+        <tr>
+            <th>aluno</th>
+            <th>disciplina</th>
+            <th>nota das atividades</th>
+            <th>nota do trabalho</th>
+            <th>nota da prova</th>
+            <th>media</th>
+            <th>opções</th>
+           
+        </tr>
+        {% for campo in lista_notas %}
+        <tr>
+            <td>{{ user.first_name}}</td>
+            <td>{{ campo.disciplinas}}</td>
+            <td>{{ campo.nota_atividades}}</td>
+            <td>{{ campo.nota_trabalho}}</td>
+            <td>{{ campo.nota_prova}}</td>
+            <td>{{ campo.media}}</td>
+            <td>
+                <a href="#" class = "btn btn-warning btn-sm">editar</a>
+                <a href="{% url 'excluir_verificacao' campo.pk %}" class="btn btn-danger btn-sm">excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspam = '7'> nenhum registro encontrado</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<hr>
+{% endblock %}
